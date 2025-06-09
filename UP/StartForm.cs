@@ -20,8 +20,9 @@ namespace UP
         private void button1_Click(object sender, EventArgs e)
         {
             var newForm = new MainForm();
-            this.Hide();
+            newForm.FormClosed += (s, args) => this.Show();
             newForm.Show();
+            this.Hide();
         }
     }
 }
