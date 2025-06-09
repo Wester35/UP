@@ -16,5 +16,12 @@ namespace UP
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var newForm = new MainForm();
+            //this.Hide();
+            newForm.Show();
+        }
     }
 }
