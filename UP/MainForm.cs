@@ -79,6 +79,8 @@ namespace UP
                 double monteCarloArea = ((double)K / N) * squareArea;
                 monteCarloResultLabel.Text = $"Монте-Карло: {monteCarloArea:F4}";
 
+                DatabaseHelper.AddResult(x0, y0, R, C, direction, N, formulaArea, monteCarloArea);
+
                 DrawVisualization(x0, y0, R, C, direction);
             }
             catch (Exception ex)
@@ -93,7 +95,7 @@ namespace UP
             Graphics g = Graphics.FromImage(bmp);
             g.Clear(Color.White);
 
-            float scale = 40f;
+            float scale = 30f;
             float centerX = pictureBox1.Width / 2;
             float centerY = pictureBox1.Height / 2;
 
@@ -153,6 +155,7 @@ namespace UP
             comboBox1.Items.Add("Вертикальная");
             comboBox1.Items.Add("Горизонтальная");
 
+            DatabaseHelper.InitializeDatabase();
         }
         private void x0Box_Enter(object sender, EventArgs e)
         {
@@ -226,5 +229,16 @@ namespace UP
             }
         }
 
+        private void toolStripLabel1_Click(object sender, EventArgs e)
+        {
+            AnalysisForm form = new AnalysisForm();
+            form.ShowDialog();
+        }
+
+        private void toolStripLabel2_Click(object sender, EventArgs e)
+        {
+            AboutForm form = new AboutForm();
+            form.ShowDialog();
+        }
     }
 }

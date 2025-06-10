@@ -16,5 +16,13 @@ namespace UP
         {
             InitializeComponent();
         }
+
+        private void AnalysisForm_Load(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = DatabaseHelper.GetAllResults();
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.ReadOnly = true;
+        }
     }
 }
