@@ -45,6 +45,7 @@ namespace UP
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.loadButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -174,11 +175,22 @@ namespace UP
             this.toolStripLabel2.Text = "About";
             this.toolStripLabel2.Click += new System.EventHandler(this.toolStripLabel2_Click);
             // 
+            // loadButton
+            // 
+            this.loadButton.Location = new System.Drawing.Point(12, 421);
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(208, 41);
+            this.loadButton.TabIndex = 12;
+            this.loadButton.Text = "Загрузить по ID";
+            this.loadButton.UseVisualStyleBackColor = true;
+            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1470, 816);
+            this.Controls.Add(this.loadButton);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.monteCarloResultLabel);
             this.Controls.Add(this.formulaResultLabel);
@@ -220,5 +232,6 @@ namespace UP
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.Button loadButton;
     }
 }

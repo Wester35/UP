@@ -18,6 +18,51 @@ namespace UP
             InitializeComponent();
         }
 
+        private double CalculateFormulaArea(double x0, double y0, double R, double C, string direction)
+        {
+            double area = 0;
+            if (direction == "Вертикальная")
+            {
+                double dx = C - x0;
+                if (Math.Abs(dx) < R)
+                {
+                    area = Math.PI * R * R - (R * R * Math.Acos(dx / R) - dx * Math.Sqrt(R * R - dx * dx));
+                }
+            }
+            else if (direction == "Горизонтальная")
+            {
+                double dy = C - y0;
+                if (Math.Abs(dy) < R)
+                {
+                    area = Math.PI * R * R - (R * R * Math.Acos(dy / R) - dy * Math.Sqrt(R * R - dy * dy));
+                }
+            }
+            return area;
+        }
+
+        private double CalculateMonteCarloArea(double x0, double y0, double R, double C, string direction, int N)
+        {
+            Random rand = new Random();
+            int K = 0;
+            for (int i = 0; i < N; i++)
+            {
+                double x = x0 - R + 2 * R * rand.NextDouble();
+                double y = y0 - R + 2 * R * rand.NextDouble();
+
+                double dist = Math.Sqrt((x - x0) * (x - x0) + (y - y0) * (y - y0));
+                if (dist <= R)
+                {
+                    if (direction == "Вертикальная" && x >= C)
+                        K++;
+                    if (direction == "Горизонтальная" && y >= C)
+                        K++;
+                }
+            }
+
+            double squareArea = 4 * R * R;
+            return ((double)K / N) * squareArea;
+        }
+
         private void buttonRes_Click(object sender, EventArgs e)
         {
             try
@@ -36,48 +81,11 @@ namespace UP
 
                 string direction = comboBox1.SelectedItem.ToString();
 
-                // Формула
-                double formulaArea = 0;
-                if (direction == "Вертикальная")
-                {
-                    double dx = C - x0;
-                    if (Math.Abs(dx) < R)
-                    {
-                        formulaArea = Math.PI * R * R - (R * R * Math.Acos(dx / R) - dx * Math.Sqrt(R * R - dx * dx));
-                    }
-                }
-                else if (direction == "Горизонтальная")
-                {
-                    double dy = C - y0;
-                    if (Math.Abs(dy) < R)
-                    {
-                        formulaArea = Math.PI * R * R - (R * R * Math.Acos(dy / R) - dy * Math.Sqrt(R * R - dy * dy));
-                    }
-                }
+                double formulaArea = CalculateFormulaArea(x0, y0, R, C, direction);
+                formulaResultLabel.Text = $"Формула: {formulaArea}";
 
-                formulaResultLabel.Text = $"Формула: {formulaArea:F4}";
-
-                // Монте-Карло
-                Random rand = new Random();
-                int K = 0;
-                for (int i = 0; i < N; i++)
-                {
-                    double x = x0 - R + 2 * R * rand.NextDouble();
-                    double y = y0 - R + 2 * R * rand.NextDouble();
-
-                    double dist = Math.Sqrt((x - x0) * (x - x0) + (y - y0) * (y - y0));
-                    if (dist <= R)
-                    {
-                        if (direction == "Вертикальная" && x >= C)
-                            K++;
-                        if (direction == "Горизонтальная" && y >= C)
-                            K++;
-                    }
-                }
-
-                double squareArea = 4 * R * R;
-                double monteCarloArea = ((double)K / N) * squareArea;
-                monteCarloResultLabel.Text = $"Монте-Карло: {monteCarloArea:F4}";
+                double monteCarloArea = CalculateMonteCarloArea(x0, y0, R, C, direction, N);
+                monteCarloResultLabel.Text = $"Монте-Карло: {monteCarloArea}";
 
                 DatabaseHelper.AddResult(x0, y0, R, C, direction, N, formulaArea, monteCarloArea);
 
@@ -88,6 +96,7 @@ namespace UP
                 MessageBox.Show($"Ошибка: {ex.Message}");
             }
         }
+
 
         private void DrawVisualization(double x0, double y0, double R, double C, string direction)
         {
@@ -270,6 +279,82 @@ namespace UP
 
             formulaResultLabel.Clear();
             monteCarloResultLabel.Clear();
+        }
+
+        private void loadButton_Click(object sender, EventArgs e)
+        {
+            using (var inputForm = new Form())
+            {
+                inputForm.Text = "Загрузка записи";
+                inputForm.Size = new Size(300, 150);
+                inputForm.FormBorderStyle = FormBorderStyle.FixedDialog;
+                inputForm.StartPosition = FormStartPosition.CenterParent;
+                var label = new Label
+                {
+                    Text = "Введите ID:",
+                    Left = 10,
+                    Top = 20,
+                    Width = 80
+                };
+
+                var textBox = new System.Windows.Forms.TextBox
+                {
+                    Left = 100,
+                    Top = 20,
+                    Width = 150
+                };
+
+                var okButton = new System.Windows.Forms.Button
+                {
+                    Text = "Загрузить",
+                    Left = 100,
+                    Top = 60,
+                    Width = 80,
+                    DialogResult = DialogResult.OK
+                };
+
+                inputForm.Controls.Add(label);
+                inputForm.Controls.Add(textBox);
+                inputForm.Controls.Add(okButton);
+                inputForm.AcceptButton = okButton;
+
+                if (inputForm.ShowDialog() == DialogResult.OK)
+                {
+                    if (int.TryParse(textBox.Text, out int id))
+                    {
+                        DataRow row = DatabaseHelper.GetResultById(id);
+
+                        if (row != null)
+                        {
+                            x0Box.Text = row["X0"].ToString();
+                            y0Box.Text = row["Y0"].ToString();
+                            rBox.Text = row["R"].ToString();
+                            cBox.Text = row["C"].ToString();
+                            comboBox1.SelectedItem = row["Direction"].ToString();
+
+                            double x0 = double.Parse(x0Box.Text);
+                            double y0 = double.Parse(y0Box.Text);
+                            double R = double.Parse(rBox.Text);
+                            double C = double.Parse(cBox.Text);
+                            string direction = comboBox1.SelectedItem.ToString();
+
+                            numericUpDown1.Value = Convert.ToDecimal(row["N"]);
+                            formulaResultLabel.Text = "Формула: " + row["FormulaResult"].ToString();
+                            monteCarloResultLabel.Text = "Монте-Карло: " + row["MonteCarloResult"].ToString();
+
+                            DrawVisualization(x0, y0, R, C, direction);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Запись не найдена!");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Введите корректный ID!");
+                    }
+                }
+            }
         }
     }
 }

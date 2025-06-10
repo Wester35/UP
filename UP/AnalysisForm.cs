@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace UP
 {
@@ -53,8 +54,8 @@ namespace UP
                 form.MaximizeBox = false;
 
                 var label = new Label { Text = "Введите ID:", Left = 10, Top = 20, Width = 80 };
-                var textBox = new TextBox { Left = 100, Top = 20, Width = 150 };
-                var okButton = new Button { Text = "Удалить", Left = 100, Top = 60, Width = 80, DialogResult = DialogResult.OK };
+                var textBox = new System.Windows.Forms.TextBox { Left = 100, Top = 20, Width = 150 };
+                var okButton = new System.Windows.Forms.Button { Text = "Удалить", Left = 100, Top = 60, Width = 80, DialogResult = DialogResult.OK };
 
                 form.Controls.Add(label);
                 form.Controls.Add(textBox);
@@ -86,11 +87,6 @@ namespace UP
                     }
                 }
             }
-        }
-
-        private void loadButton_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

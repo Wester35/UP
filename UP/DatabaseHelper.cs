@@ -113,4 +113,22 @@ public static class DatabaseHelper
             cmd.ExecuteNonQuery();
         }
     }
+
+    public static DataRow GetResultById(int id)
+    {
+        using (var conn = new SQLiteConnection(ConnectionString))
+        {
+            conn.Open();
+            var dt = new DataTable();
+            var cmd = new SQLiteCommand("SELECT * FROM Results WHERE Id = @id;", conn);
+            cmd.Parameters.AddWithValue("@id", id);
+
+            using (var reader = cmd.ExecuteReader())
+            {
+                dt.Load(reader);
+            }
+
+            return dt.Rows.Count > 0 ? dt.Rows[0] : null;
+        }
+    }
 }
