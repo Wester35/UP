@@ -20,48 +20,44 @@ namespace UP
 
         private double CalculateFormulaArea(double x0, double y0, double R, double C, string direction)
         {
-            double area = 0;
-            if (direction == "Вертикальная")
+            double d = direction == "Вертикальная" ? Math.Abs(C - x0) : Math.Abs(C - y0);
+
+            if (d >= R)
             {
-                double dx = C - x0;
-                if (Math.Abs(dx) < R)
-                {
-                    area = Math.PI * R * R - (R * R * Math.Acos(dx / R) - dx * Math.Sqrt(R * R - dx * dx));
-                }
+                return d > R ? 0 : Math.PI * R * R / 2;
             }
-            else if (direction == "Горизонтальная")
-            {
-                double dy = C - y0;
-                if (Math.Abs(dy) < R)
-                {
-                    area = Math.PI * R * R - (R * R * Math.Acos(dy / R) - dy * Math.Sqrt(R * R - dy * dy));
-                }
-            }
-            return area;
+
+            double segmentArea = R * R * Math.Acos(d / R) - d * Math.Sqrt(R * R - d * d);
+
+            return Math.PI * R * R - segmentArea;
         }
 
         private double CalculateMonteCarloArea(double x0, double y0, double R, double C, string direction, int N)
         {
+            if (N <= 0 || R <= 0) return 0;
+
             Random rand = new Random();
             int K = 0;
+            double squareArea = 4 * R * R;
+
             for (int i = 0; i < N; i++)
             {
                 double x = x0 - R + 2 * R * rand.NextDouble();
                 double y = y0 - R + 2 * R * rand.NextDouble();
 
-                double dist = Math.Sqrt((x - x0) * (x - x0) + (y - y0) * (y - y0));
-                if (dist <= R)
-                {
-                    if (direction == "Вертикальная" && x >= C)
-                        K++;
-                    if (direction == "Горизонтальная" && y >= C)
-                        K++;
-                }
+                if (Math.Pow(x - x0, 2) + Math.Pow(y - y0, 2) > R * R) continue;
+
+                bool isInSegment = direction == "Вертикальная" ? (x >= C) : (y >= C);
+                if (isInSegment) K++;
             }
 
-            double squareArea = 4 * R * R;
-            return ((double)K / N) * squareArea;
+            double segmentArea = ((double)K / N) * squareArea;
+
+            double fullCircle = Math.PI * R * R;
+            return Math.Max(segmentArea, fullCircle - segmentArea);
         }
+
+
 
         private void buttonRes_Click(object sender, EventArgs e)
         {
@@ -108,6 +104,18 @@ namespace UP
             float centerX = pictureBox1.Width / 2;
             float centerY = pictureBox1.Height / 2;
 
+            Pen gridPen = new Pen(Color.LightGray, 1);
+            gridPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+
+            for (float x = centerX; x < pictureBox1.Width; x += scale)
+                g.DrawLine(gridPen, x, 0, x, pictureBox1.Height);
+            for (float x = centerX - scale; x >= 0; x -= scale)
+                g.DrawLine(gridPen, x, 0, x, pictureBox1.Height);
+            for (float y = centerY; y < pictureBox1.Height; y += scale)
+                g.DrawLine(gridPen, 0, y, pictureBox1.Width, y);
+            for (float y = centerY - scale; y >= 0; y -= scale)
+                g.DrawLine(gridPen, 0, y, pictureBox1.Width, y);
+
             Pen axisPen = new Pen(Color.Gray, 1);
             g.DrawLine(axisPen, 0, centerY, pictureBox1.Width, centerY);
             g.DrawLine(axisPen, centerX, 0, centerX, pictureBox1.Height);
@@ -133,6 +141,7 @@ namespace UP
 
             pictureBox1.Image = bmp;
         }
+
 
 
         private void MainForm_Load(object sender, EventArgs e)

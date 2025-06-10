@@ -97,6 +97,11 @@ namespace UP
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(12, 99);
             this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(208, 22);
             this.numericUpDown1.TabIndex = 5;
