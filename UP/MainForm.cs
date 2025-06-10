@@ -240,5 +240,36 @@ namespace UP
             AboutForm form = new AboutForm();
             form.ShowDialog();
         }
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            x0Box.Clear();
+            y0Box.Clear();
+            rBox.Clear();   
+            cBox.Clear();
+
+            if(comboBox1.Items.Count > 0)
+            {
+                comboBox1.SelectedIndex = -1;
+            }
+
+            numericUpDown1.Value = 0;
+            pictureBox1.Image = null;
+
+            x0Box.Text = "X0";
+            x0Box.ForeColor = Color.Gray;
+
+            y0Box.Text = "Y0";
+            y0Box.ForeColor = Color.Gray;
+
+            rBox.Text = "R";
+            rBox.ForeColor = Color.Gray;
+
+            cBox.Text = "C";
+            cBox.ForeColor = Color.Gray;
+
+            formulaResultLabel.Clear();
+            monteCarloResultLabel.Clear();
+        }
     }
 }

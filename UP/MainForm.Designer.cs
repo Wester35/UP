@@ -120,6 +120,7 @@ namespace UP
             this.buttonClear.TabIndex = 7;
             this.buttonClear.Text = "Очистить";
             this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // pictureBox1
             // 

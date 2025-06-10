@@ -103,4 +103,14 @@ public static class DatabaseHelper
             cmd.ExecuteNonQuery();
         }
     }
+
+    public static void DeleteAllResult()
+    {
+        using (var conn = new SQLiteConnection(ConnectionString))
+        {
+            conn.Open();
+            var cmd = new SQLiteCommand("DELETE FROM Results;", conn);
+            cmd.ExecuteNonQuery();
+        }
+    }
 }
