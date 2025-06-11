@@ -47,7 +47,7 @@
             this.ClientSize = new System.Drawing.Size(885, 428);
             this.Controls.Add(this.richTextBox1);
             this.Name = "AboutForm";
-            this.Text = "AboutForm";
+            this.Text = "О программе";
             this.Load += new System.EventHandler(this.AboutForm_Load);
             this.ResumeLayout(false);
 

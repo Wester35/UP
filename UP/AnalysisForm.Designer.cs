@@ -43,18 +43,20 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
+            this.dataGridView1.Location = new System.Drawing.Point(9, 10);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1155, 535);
+            this.dataGridView1.Size = new System.Drawing.Size(866, 435);
             this.dataGridView1.TabIndex = 0;
             // 
             // deleteAllButton
             // 
-            this.deleteAllButton.Location = new System.Drawing.Point(12, 554);
+            this.deleteAllButton.Location = new System.Drawing.Point(9, 450);
+            this.deleteAllButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.deleteAllButton.Name = "deleteAllButton";
-            this.deleteAllButton.Size = new System.Drawing.Size(381, 32);
+            this.deleteAllButton.Size = new System.Drawing.Size(286, 26);
             this.deleteAllButton.TabIndex = 1;
             this.deleteAllButton.Text = "Удалить ВСЕ";
             this.deleteAllButton.UseVisualStyleBackColor = true;
@@ -62,9 +64,10 @@
             // 
             // deleteIDButton
             // 
-            this.deleteIDButton.Location = new System.Drawing.Point(786, 554);
+            this.deleteIDButton.Location = new System.Drawing.Point(590, 450);
+            this.deleteIDButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.deleteIDButton.Name = "deleteIDButton";
-            this.deleteIDButton.Size = new System.Drawing.Size(381, 32);
+            this.deleteIDButton.Size = new System.Drawing.Size(286, 26);
             this.deleteIDButton.TabIndex = 2;
             this.deleteIDButton.Text = "Удалить по ID";
             this.deleteIDButton.UseVisualStyleBackColor = true;
@@ -80,14 +83,15 @@
             // 
             // AnalysisForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1180, 595);
+            this.ClientSize = new System.Drawing.Size(885, 483);
             this.Controls.Add(this.deleteIDButton);
             this.Controls.Add(this.deleteAllButton);
             this.Controls.Add(this.dataGridView1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "AnalysisForm";
-            this.Text = "AnalysisForm";
+            this.Text = "Результаты";
             this.Load += new System.EventHandler(this.AnalysisForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.databaseHelperBindingSource1)).EndInit();
