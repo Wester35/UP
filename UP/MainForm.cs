@@ -249,7 +249,7 @@ namespace UP
 
         private void toolStripLabel1_Click(object sender, EventArgs e)
         {
-            AnalysisForm form = new AnalysisForm();
+            HistoryForm form = new HistoryForm();
             form.ShowDialog();
         }
 
@@ -364,6 +364,12 @@ namespace UP
                     }
                 }
             }
+        }
+
+        private void toolAnalisys_Click(object sender, EventArgs e)
+        {
+            AnalysisForm form = new AnalysisForm();
+            form.ShowDialog();
         }
     }
 }

@@ -1,7 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
+
+
+public class ResultEntry
+{
+    public int Id { get; set; }
+    public double Formula { get; set; }
+    public double MonteCarlo { get; set; }
+    public double Difference => Math.Abs(Formula - MonteCarlo);
+}
 
 public static class DatabaseHelper
 {
@@ -130,5 +140,32 @@ public static class DatabaseHelper
 
             return dt.Rows.Count > 0 ? dt.Rows[0] : null;
         }
+    }
+
+    public static List<ResultEntry> GetAllResultsForAnalys()
+    {
+        var results = new List<ResultEntry>();
+
+        using (var conn = new SQLiteConnection(ConnectionString))
+        {
+            conn.Open();
+            string sql = "SELECT id, FormulaResult, MonteCarloResult FROM Results;";
+            using (var cmd = new SQLiteCommand(sql, conn))
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var entry = new ResultEntry
+                    {
+                        Id = reader.GetInt32(0),
+                        Formula = reader.GetDouble(1),
+                        MonteCarlo = reader.GetDouble(2)
+                    };
+                    results.Add(entry);
+                }
+            }
+        }
+
+        return results;
     }
 }

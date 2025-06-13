@@ -28,84 +28,45 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.deleteAllButton = new System.Windows.Forms.Button();
-            this.deleteIDButton = new System.Windows.Forms.Button();
-            this.databaseHelperBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.databaseHelperBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.databaseHelperBindingSource1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.databaseHelperBindingSource)).BeginInit();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // chart1
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(9, 10);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(866, 435);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // deleteAllButton
-            // 
-            this.deleteAllButton.Location = new System.Drawing.Point(9, 450);
-            this.deleteAllButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.deleteAllButton.Name = "deleteAllButton";
-            this.deleteAllButton.Size = new System.Drawing.Size(286, 26);
-            this.deleteAllButton.TabIndex = 1;
-            this.deleteAllButton.Text = "Удалить ВСЕ";
-            this.deleteAllButton.UseVisualStyleBackColor = true;
-            this.deleteAllButton.Click += new System.EventHandler(this.deleteAllButton_Click);
-            // 
-            // deleteIDButton
-            // 
-            this.deleteIDButton.Location = new System.Drawing.Point(590, 450);
-            this.deleteIDButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.deleteIDButton.Name = "deleteIDButton";
-            this.deleteIDButton.Size = new System.Drawing.Size(286, 26);
-            this.deleteIDButton.TabIndex = 2;
-            this.deleteIDButton.Text = "Удалить по ID";
-            this.deleteIDButton.UseVisualStyleBackColor = true;
-            this.deleteIDButton.Click += new System.EventHandler(this.deleteIDButton_Click);
-            // 
-            // databaseHelperBindingSource1
-            // 
-            this.databaseHelperBindingSource1.DataSource = typeof(DatabaseHelper);
-            // 
-            // databaseHelperBindingSource
-            // 
-            this.databaseHelperBindingSource.DataSource = typeof(DatabaseHelper);
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
+            this.chart1.Location = new System.Drawing.Point(12, 12);
+            this.chart1.Name = "chart1";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
+            this.chart1.Size = new System.Drawing.Size(776, 426);
+            this.chart1.TabIndex = 0;
+            this.chart1.Text = "chart1";
             // 
             // AnalysisForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(885, 483);
-            this.Controls.Add(this.deleteIDButton);
-            this.Controls.Add(this.deleteAllButton);
-            this.Controls.Add(this.dataGridView1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.chart1);
             this.Name = "AnalysisForm";
-            this.Text = "Результаты";
+            this.Text = "Анализ";
             this.Load += new System.EventHandler(this.AnalysisForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.databaseHelperBindingSource1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.databaseHelperBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.BindingSource databaseHelperBindingSource;
-        private System.Windows.Forms.Button deleteAllButton;
-        private System.Windows.Forms.Button deleteIDButton;
-        private System.Windows.Forms.BindingSource databaseHelperBindingSource1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }

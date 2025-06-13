@@ -46,6 +46,7 @@ namespace UP
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.loadButton = new System.Windows.Forms.Button();
+            this.toolAnalisys = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -54,7 +55,7 @@ namespace UP
             // x0Box
             // 
             this.x0Box.Location = new System.Drawing.Point(9, 32);
-            this.x0Box.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.x0Box.Margin = new System.Windows.Forms.Padding(2);
             this.x0Box.Name = "x0Box";
             this.x0Box.Size = new System.Drawing.Size(76, 20);
             this.x0Box.TabIndex = 0;
@@ -63,7 +64,7 @@ namespace UP
             // y0Box
             // 
             this.y0Box.Location = new System.Drawing.Point(9, 55);
-            this.y0Box.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.y0Box.Margin = new System.Windows.Forms.Padding(2);
             this.y0Box.Name = "y0Box";
             this.y0Box.Size = new System.Drawing.Size(76, 20);
             this.y0Box.TabIndex = 1;
@@ -71,7 +72,7 @@ namespace UP
             // rBox
             // 
             this.rBox.Location = new System.Drawing.Point(89, 32);
-            this.rBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rBox.Margin = new System.Windows.Forms.Padding(2);
             this.rBox.Name = "rBox";
             this.rBox.Size = new System.Drawing.Size(76, 20);
             this.rBox.TabIndex = 2;
@@ -79,7 +80,7 @@ namespace UP
             // cBox
             // 
             this.cBox.Location = new System.Drawing.Point(89, 55);
-            this.cBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cBox.Margin = new System.Windows.Forms.Padding(2);
             this.cBox.Name = "cBox";
             this.cBox.Size = new System.Drawing.Size(76, 20);
             this.cBox.TabIndex = 3;
@@ -152,6 +153,7 @@ namespace UP
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
+            this.toolAnalisys,
             this.toolStripLabel2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -176,13 +178,20 @@ namespace UP
             // loadButton
             // 
             this.loadButton.Location = new System.Drawing.Point(9, 342);
-            this.loadButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.loadButton.Margin = new System.Windows.Forms.Padding(2);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(156, 33);
             this.loadButton.TabIndex = 12;
             this.loadButton.Text = "Загрузить по ID";
             this.loadButton.UseVisualStyleBackColor = true;
             this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+            // 
+            // toolAnalisys
+            // 
+            this.toolAnalisys.Name = "toolAnalisys";
+            this.toolAnalisys.Size = new System.Drawing.Size(47, 22);
+            this.toolAnalisys.Text = "Анализ";
+            this.toolAnalisys.Click += new System.EventHandler(this.toolAnalisys_Click);
             // 
             // MainForm
             // 
@@ -202,7 +211,7 @@ namespace UP
             this.Controls.Add(this.rBox);
             this.Controls.Add(this.y0Box);
             this.Controls.Add(this.x0Box);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Text = "Главное окно";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -232,5 +241,6 @@ namespace UP
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.Button loadButton;
+        private System.Windows.Forms.ToolStripLabel toolAnalisys;
     }
 }
