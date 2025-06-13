@@ -76,7 +76,7 @@ public static class DatabaseHelper
         {
             conn.Open();
             var dt = new DataTable();
-            var cmd = new SQLiteCommand("SELECT * FROM Results ORDER BY Date DESC;", conn);
+            var cmd = new SQLiteCommand("SELECT * FROM Results ORDER BY Id DESC;", conn);
             using (var reader = cmd.ExecuteReader())
             {
                 dt.Load(reader);
