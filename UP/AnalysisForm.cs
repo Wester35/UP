@@ -28,8 +28,8 @@ namespace UP
             };
             chart1.Series.Add(series);
 
-            chart1.ChartAreas[0].AxisX.Title = "Опыт №";
-            chart1.ChartAreas[0].AxisY.Title = "Разница (|Формула - Монте-Карло|)";
+            chart1.ChartAreas[0].AxisX.Title = "№";
+            chart1.ChartAreas[0].AxisY.Title = "Разница";
 
             var data_ = DatabaseHelper.GetAllResultsForAnalys();
             foreach (var entry in data_)
