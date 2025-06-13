@@ -11,8 +11,24 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace UP
 {
+    public class MonteCarloPoint
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+        public bool InSegment { get; set; }
+
+        public MonteCarloPoint(double x, double y, bool inSegment)
+        {
+            X = x;
+            Y = y;
+            InSegment = inSegment;
+        }
+    }
+
     public partial class MainForm : Form
     {
+        protected List<MonteCarloPoint> monteCarloPoints = new List<MonteCarloPoint>();
+
         public MainForm()
         {
             InitializeComponent();
@@ -49,6 +65,8 @@ namespace UP
 
                 bool isInSegment = direction == "Вертикальная" ? (x >= C) : (y >= C);
                 if (isInSegment) K++;
+
+                monteCarloPoints.Add(new MonteCarloPoint(x, y, isInSegment));
             }
 
             double segmentArea = ((double)K / N) * squareArea;
@@ -85,7 +103,7 @@ namespace UP
 
                 DatabaseHelper.AddResult(x0, y0, R, C, direction, N, formulaArea, monteCarloArea);
 
-                DrawVisualization(x0, y0, R, C, direction);
+                DrawVisualization(x0, y0, R, C, direction, monteCarloPoints);
             }
             catch (Exception ex)
             {
@@ -94,7 +112,7 @@ namespace UP
         }
 
 
-        private void DrawVisualization(double x0, double y0, double R, double C, string direction)
+        private void DrawVisualization(double x0, double y0, double R, double C, string direction, List<MonteCarloPoint> points)
         {
             Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             Graphics g = Graphics.FromImage(bmp);
@@ -138,6 +156,16 @@ namespace UP
                 float xLine = centerX + (float)(C * scale);
                 g.DrawLine(linePen, xLine, 0, xLine, pictureBox1.Height);
             }
+
+            foreach (var point in points)
+            {
+                float px = centerX + (float)(point.X * scale);
+                float py = centerY - (float)(point.Y * scale);
+                Brush brush = point.InSegment ? Brushes.Red : Brushes.Blue;
+                g.FillEllipse(brush, px - 2, py - 2, 3, 3);
+            }
+
+            monteCarloPoints.Clear();
 
             pictureBox1.Image = bmp;
         }
@@ -348,10 +376,14 @@ namespace UP
                             string direction = comboBox1.SelectedItem.ToString();
 
                             numericUpDown1.Value = Convert.ToDecimal(row["N"]);
+                            int N = (int)numericUpDown1.Value;
+
                             formulaResultLabel.Text = "Формула: " + row["FormulaResult"].ToString();
                             monteCarloResultLabel.Text = "Монте-Карло: " + row["MonteCarloResult"].ToString();
 
-                            DrawVisualization(x0, y0, R, C, direction);
+                            CalculateMonteCarloArea(x0, y0, R, C, direction, N);
+
+                            DrawVisualization(x0, y0, R, C, direction, monteCarloPoints);
                         }
                         else
                         {
