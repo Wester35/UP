@@ -5,167 +5,164 @@ using System.Data.SQLite;
 using System.IO;
 
 
-public class ResultEntry
+namespace UP
 {
-    public int Id { get; set; }
-    public double Formula { get; set; }
-    public double MonteCarlo { get; set; }
-    public double Difference => Math.Abs(Formula - MonteCarlo);
-}
 
-public static class DatabaseHelper
-{
-    private static readonly string DbFile = "results.db";
-    private static readonly string ConnectionString = $"Data Source={DbFile};Version=3;";
-
-    public static void InitializeDatabase()
+    public static class DatabaseHelper
     {
-        if (!File.Exists(DbFile))
+        private static readonly string DbFile = "results.db";
+        private static readonly string ConnectionString = $"Data Source={DbFile};Version=3;";
+
+        public static void InitializeDatabase()
         {
-            SQLiteConnection.CreateFile(DbFile);
+            if (!File.Exists(DbFile))
+            {
+                SQLiteConnection.CreateFile(DbFile);
+                using (var conn = new SQLiteConnection(ConnectionString))
+                {
+                    conn.Open();
+                    string createTable = @"
+                        CREATE TABLE Results (
+                            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            X0 REAL,
+                            Y0 REAL,
+                            R REAL,
+                            C REAL,
+                            Direction TEXT,
+                            N INTEGER,
+                            FormulaResult REAL,
+                            MonteCarloResult REAL,
+                            Date TEXT
+                        );";
+                    using (var cmd = new SQLiteCommand(createTable, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
+
+        public static void AddResult(double x0, double y0, double r, double c, string direction, int n, double formula, double monteCarlo)
+        {
             using (var conn = new SQLiteConnection(ConnectionString))
             {
                 conn.Open();
-                string createTable = @"
-                    CREATE TABLE Results (
-                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        X0 REAL,
-                        Y0 REAL,
-                        R REAL,
-                        C REAL,
-                        Direction TEXT,
-                        N INTEGER,
-                        FormulaResult REAL,
-                        MonteCarloResult REAL,
-                        Date TEXT
-                    );";
-                using (var cmd = new SQLiteCommand(createTable, conn))
+                var cmd = new SQLiteCommand(@"
+                    INSERT INTO Results (X0, Y0, R, C, Direction, N, FormulaResult, MonteCarloResult, Date)
+                    VALUES (@x0, @y0, @r, @c, @direction, @n, @formula, @monte, @date);", conn);
+
+                cmd.Parameters.AddWithValue("@x0", x0);
+                cmd.Parameters.AddWithValue("@y0", y0);
+                cmd.Parameters.AddWithValue("@r", r);
+                cmd.Parameters.AddWithValue("@c", c);
+                cmd.Parameters.AddWithValue("@direction", direction);
+                cmd.Parameters.AddWithValue("@n", n);
+                cmd.Parameters.AddWithValue("@formula", formula);
+                cmd.Parameters.AddWithValue("@monte", monteCarlo);
+                cmd.Parameters.AddWithValue("@date", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static DataTable GetAllResults()
+        {
+            using (var conn = new SQLiteConnection(ConnectionString))
+            {
+                conn.Open();
+                var dt = new DataTable();
+                var cmd = new SQLiteCommand("SELECT * FROM Results ORDER BY Id DESC;", conn);
+                using (var reader = cmd.ExecuteReader())
                 {
-                    cmd.ExecuteNonQuery();
+                    dt.Load(reader);
                 }
+                return dt;
             }
         }
-    }
 
-    public static void AddResult(double x0, double y0, double r, double c, string direction, int n, double formula, double monteCarlo)
-    {
-        using (var conn = new SQLiteConnection(ConnectionString))
+        public static void UpdateResult(int id, double formula, double monte)
         {
-            conn.Open();
-            var cmd = new SQLiteCommand(@"
-                INSERT INTO Results (X0, Y0, R, C, Direction, N, FormulaResult, MonteCarloResult, Date)
-                VALUES (@x0, @y0, @r, @c, @direction, @n, @formula, @monte, @date);", conn);
-
-            cmd.Parameters.AddWithValue("@x0", x0);
-            cmd.Parameters.AddWithValue("@y0", y0);
-            cmd.Parameters.AddWithValue("@r", r);
-            cmd.Parameters.AddWithValue("@c", c);
-            cmd.Parameters.AddWithValue("@direction", direction);
-            cmd.Parameters.AddWithValue("@n", n);
-            cmd.Parameters.AddWithValue("@formula", formula);
-            cmd.Parameters.AddWithValue("@monte", monteCarlo);
-            cmd.Parameters.AddWithValue("@date", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-
-            cmd.ExecuteNonQuery();
-        }
-    }
-
-    public static DataTable GetAllResults()
-    {
-        using (var conn = new SQLiteConnection(ConnectionString))
-        {
-            conn.Open();
-            var dt = new DataTable();
-            var cmd = new SQLiteCommand("SELECT * FROM Results ORDER BY Id DESC;", conn);
-            using (var reader = cmd.ExecuteReader())
+            using (var conn = new SQLiteConnection(ConnectionString))
             {
-                dt.Load(reader);
+                conn.Open();
+                var cmd = new SQLiteCommand(@"
+                    UPDATE Results 
+                    SET FormulaResult = @formula, MonteCarloResult = @monte 
+                    WHERE Id = @id;", conn);
+
+                cmd.Parameters.AddWithValue("@formula", formula);
+                cmd.Parameters.AddWithValue("@monte", monte);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                cmd.ExecuteNonQuery();
             }
-            return dt;
         }
-    }
 
-    public static void UpdateResult(int id, double formula, double monte)
-    {
-        using (var conn = new SQLiteConnection(ConnectionString))
+        public static void DeleteResult(int id)
         {
-            conn.Open();
-            var cmd = new SQLiteCommand(@"
-                UPDATE Results 
-                SET FormulaResult = @formula, MonteCarloResult = @monte 
-                WHERE Id = @id;", conn);
-
-            cmd.Parameters.AddWithValue("@formula", formula);
-            cmd.Parameters.AddWithValue("@monte", monte);
-            cmd.Parameters.AddWithValue("@id", id);
-
-            cmd.ExecuteNonQuery();
-        }
-    }
-
-    public static void DeleteResult(int id)
-    {
-        using (var conn = new SQLiteConnection(ConnectionString))
-        {
-            conn.Open();
-            var cmd = new SQLiteCommand("DELETE FROM Results WHERE Id = @id;", conn);
-            cmd.Parameters.AddWithValue("@id", id);
-            cmd.ExecuteNonQuery();
-        }
-    }
-
-    public static void DeleteAllResult()
-    {
-        using (var conn = new SQLiteConnection(ConnectionString))
-        {
-            conn.Open();
-            var cmd = new SQLiteCommand("DELETE FROM Results;", conn);
-            cmd.ExecuteNonQuery();
-        }
-    }
-
-    public static DataRow GetResultById(int id)
-    {
-        using (var conn = new SQLiteConnection(ConnectionString))
-        {
-            conn.Open();
-            var dt = new DataTable();
-            var cmd = new SQLiteCommand("SELECT * FROM Results WHERE Id = @id;", conn);
-            cmd.Parameters.AddWithValue("@id", id);
-
-            using (var reader = cmd.ExecuteReader())
+            using (var conn = new SQLiteConnection(ConnectionString))
             {
-                dt.Load(reader);
+                conn.Open();
+                var cmd = new SQLiteCommand("DELETE FROM Results WHERE Id = @id;", conn);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
             }
-
-            return dt.Rows.Count > 0 ? dt.Rows[0] : null;
         }
-    }
 
-    public static List<ResultEntry> GetAllResultsForAnalys()
-    {
-        var results = new List<ResultEntry>();
-
-        using (var conn = new SQLiteConnection(ConnectionString))
+        public static void DeleteAllResult()
         {
-            conn.Open();
-            string sql = "SELECT id, FormulaResult, MonteCarloResult FROM Results;";
-            using (var cmd = new SQLiteCommand(sql, conn))
-            using (var reader = cmd.ExecuteReader())
+            using (var conn = new SQLiteConnection(ConnectionString))
             {
-                while (reader.Read())
+                conn.Open();
+                var cmd = new SQLiteCommand("DELETE FROM Results;", conn);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static DataRow GetResultById(int id)
+        {
+            using (var conn = new SQLiteConnection(ConnectionString))
+            {
+                conn.Open();
+                var dt = new DataTable();
+                var cmd = new SQLiteCommand("SELECT * FROM Results WHERE Id = @id;", conn);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                using (var reader = cmd.ExecuteReader())
                 {
-                    var entry = new ResultEntry
+                    dt.Load(reader);
+                }
+
+                return dt.Rows.Count > 0 ? dt.Rows[0] : null;
+            }
+        }
+
+        public static List<ResultEntry> GetAllResultsForAnalys()
+        {
+            var results = new List<ResultEntry>();
+
+            using (var conn = new SQLiteConnection(ConnectionString))
+            {
+                conn.Open();
+                string sql = "SELECT id, FormulaResult, MonteCarloResult FROM Results;";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
                     {
-                        Id = reader.GetInt32(0),
-                        Formula = reader.GetDouble(1),
-                        MonteCarlo = reader.GetDouble(2)
-                    };
-                    results.Add(entry);
+                        var entry = new ResultEntry
+                        {
+                            Id = reader.GetInt32(0),
+                            Formula = reader.GetDouble(1),
+                            MonteCarlo = reader.GetDouble(2)
+                        };
+                        results.Add(entry);
+                    }
                 }
             }
-        }
 
-        return results;
+            return results;
+        }
     }
+
 }

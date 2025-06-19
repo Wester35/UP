@@ -93,10 +93,14 @@
     <Compile Include="HistoryForm.Designer.cs">
       <DependentUpon>HistoryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MonteCarloPoint.cs" />
+    <Compile Include="ResultEntry.cs" />
     <Compile Include="StartForm.cs">
       <SubType>Form</SubType>
     </Compile>

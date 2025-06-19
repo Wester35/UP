@@ -11,19 +11,6 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace UP
 {
-    public class MonteCarloPoint
-    {
-        public double X { get; set; }
-        public double Y { get; set; }
-        public bool InSegment { get; set; }
-
-        public MonteCarloPoint(double x, double y, bool inSegment)
-        {
-            X = x;
-            Y = y;
-            InSegment = inSegment;
-        }
-    }
 
     public partial class MainForm : Form
     {
