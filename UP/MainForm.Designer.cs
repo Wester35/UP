@@ -31,6 +31,7 @@ namespace UP
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.x0Box = new System.Windows.Forms.TextBox();
             this.y0Box = new System.Windows.Forms.TextBox();
             this.rBox = new System.Windows.Forms.TextBox();
@@ -198,7 +199,7 @@ namespace UP
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(156, 33);
             this.loadButton.TabIndex = 12;
-            this.loadButton.Text = "W";
+            this.loadButton.Text = "Загрузить по ID";
             this.loadButton.UseVisualStyleBackColor = true;
             this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
             // 
@@ -220,6 +221,7 @@ namespace UP
             this.Controls.Add(this.rBox);
             this.Controls.Add(this.y0Box);
             this.Controls.Add(this.x0Box);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Text = "Главное окно";

@@ -19,10 +19,6 @@ namespace UP
         public MainForm()
         {
             InitializeComponent();
-            //helpProvider1.HelpNamespace = "spravka.chm";
-            //helpProvider1.SetHelpKeyword(this.toolStrip1, "main");
-            //helpProvider1.SetHelpNavigator(this.toolHelp, HelpNavigator.Topic);
-            //helpProvider1.SetShowHelp(this.toolHelp, true);
         }
 
         private double CalculateFormulaArea(double x0, double y0, double R, double C, string direction)

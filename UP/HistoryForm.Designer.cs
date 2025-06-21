@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HistoryForm));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.deleteAllButton = new System.Windows.Forms.Button();
             this.deleteIDButton = new System.Windows.Forms.Button();
@@ -44,7 +45,7 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(9, 10);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 24;
@@ -54,7 +55,7 @@
             // deleteAllButton
             // 
             this.deleteAllButton.Location = new System.Drawing.Point(9, 450);
-            this.deleteAllButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.deleteAllButton.Margin = new System.Windows.Forms.Padding(2);
             this.deleteAllButton.Name = "deleteAllButton";
             this.deleteAllButton.Size = new System.Drawing.Size(286, 26);
             this.deleteAllButton.TabIndex = 1;
@@ -65,7 +66,7 @@
             // deleteIDButton
             // 
             this.deleteIDButton.Location = new System.Drawing.Point(590, 450);
-            this.deleteIDButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.deleteIDButton.Margin = new System.Windows.Forms.Padding(2);
             this.deleteIDButton.Name = "deleteIDButton";
             this.deleteIDButton.Size = new System.Drawing.Size(286, 26);
             this.deleteIDButton.TabIndex = 2;
@@ -75,13 +76,13 @@
             // 
             // databaseHelperBindingSource1
             // 
-            this.databaseHelperBindingSource1.DataSource = typeof(DatabaseHelper);
+            this.databaseHelperBindingSource1.DataSource = typeof(UP.DatabaseHelper);
             // 
             // databaseHelperBindingSource
             // 
-            this.databaseHelperBindingSource.DataSource = typeof(DatabaseHelper);
+            this.databaseHelperBindingSource.DataSource = typeof(UP.DatabaseHelper);
             // 
-            // AnalysisForm
+            // HistoryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -89,8 +90,9 @@
             this.Controls.Add(this.deleteIDButton);
             this.Controls.Add(this.deleteAllButton);
             this.Controls.Add(this.dataGridView1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.Name = "AnalysisForm";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Name = "HistoryForm";
             this.Text = "Результаты";
             this.Load += new System.EventHandler(this.AnalysisForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
