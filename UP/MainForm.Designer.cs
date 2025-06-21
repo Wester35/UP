@@ -44,9 +44,10 @@ namespace UP
             this.monteCarloResultLabel = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolAnalisys = new System.Windows.Forms.ToolStripLabel();
+            this.toolHelp = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.loadButton = new System.Windows.Forms.Button();
-            this.toolAnalisys = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -154,6 +155,7 @@ namespace UP
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
             this.toolAnalisys,
+            this.toolHelp,
             this.toolStripLabel2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -167,6 +169,20 @@ namespace UP
             this.toolStripLabel1.Size = new System.Drawing.Size(107, 22);
             this.toolStripLabel1.Text = "История расчетов";
             this.toolStripLabel1.Click += new System.EventHandler(this.toolStripLabel1_Click);
+            // 
+            // toolAnalisys
+            // 
+            this.toolAnalisys.Name = "toolAnalisys";
+            this.toolAnalisys.Size = new System.Drawing.Size(47, 22);
+            this.toolAnalisys.Text = "Анализ";
+            this.toolAnalisys.Click += new System.EventHandler(this.toolAnalisys_Click);
+            // 
+            // toolHelp
+            // 
+            this.toolHelp.Name = "toolHelp";
+            this.toolHelp.Size = new System.Drawing.Size(53, 22);
+            this.toolHelp.Text = "Справка";
+            this.toolHelp.Click += new System.EventHandler(this.toolHelp_Click);
             // 
             // toolStripLabel2
             // 
@@ -182,16 +198,9 @@ namespace UP
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(156, 33);
             this.loadButton.TabIndex = 12;
-            this.loadButton.Text = "Загрузить по ID";
+            this.loadButton.Text = "W";
             this.loadButton.UseVisualStyleBackColor = true;
             this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
-            // 
-            // toolAnalisys
-            // 
-            this.toolAnalisys.Name = "toolAnalisys";
-            this.toolAnalisys.Size = new System.Drawing.Size(47, 22);
-            this.toolAnalisys.Text = "Анализ";
-            this.toolAnalisys.Click += new System.EventHandler(this.toolAnalisys_Click);
             // 
             // MainForm
             // 
@@ -242,5 +251,6 @@ namespace UP
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.Button loadButton;
         private System.Windows.Forms.ToolStripLabel toolAnalisys;
+        private System.Windows.Forms.ToolStripLabel toolHelp;
     }
 }
