@@ -393,7 +393,17 @@ namespace UP
 
         private void toolHelp_Click(object sender, EventArgs e)
         {
-            Help.ShowHelp(this, "spravka.chm", HelpNavigator.TableOfContents, "Начальная страница");
+            Help.ShowHelp(this, "spravka.chm", HelpNavigator.KeywordIndex, "main");
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.F1)
+            {
+                Help.ShowHelp(this, "spravka.chm", HelpNavigator.KeywordIndex, "main");
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }
