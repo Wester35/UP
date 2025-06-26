@@ -93,7 +93,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "HistoryForm";
-            this.Text = "Результаты";
+            this.Text = "История расчетов";
             this.Load += new System.EventHandler(this.AnalysisForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.databaseHelperBindingSource1)).EndInit();

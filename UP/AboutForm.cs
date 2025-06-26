@@ -12,11 +12,14 @@ namespace UP
 {
     public partial class AboutForm : Form
     {
+
+        // Конструктор формы о программе
         public AboutForm()
         {
             InitializeComponent();
         }
 
+        //заполнение текста о программе
         private void AboutForm_Load(object sender, EventArgs e)
         {
             string aboutText =

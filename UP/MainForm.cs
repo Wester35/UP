@@ -14,13 +14,14 @@ namespace UP
 
     public partial class MainForm : Form
     {
-        protected List<MonteCarloPoint> monteCarloPoints = new List<MonteCarloPoint>();
+        protected List<MonteCarloPoint> monteCarloPoints = new List<MonteCarloPoint>(); //список для хранения точек монте-карло
 
         public MainForm()
         {
             InitializeComponent();
         }
 
+        //функция подсчета площади по формуле
         private double CalculateFormulaArea(double x0, double y0, double R, double C, string direction)
         {
             double d = direction == "Вертикальная" ? Math.Abs(C - x0) : Math.Abs(C - y0);
@@ -35,6 +36,7 @@ namespace UP
             return Math.PI * R * R - segmentArea;
         }
 
+        //функция подсчета площади по Монте-Карло
         private double CalculateMonteCarloArea(double x0, double y0, double R, double C, string direction, int N)
         {
             if (N <= 0 || R <= 0) return 0;
@@ -62,8 +64,7 @@ namespace UP
             return Math.Max(segmentArea, fullCircle - segmentArea);
         }
 
-
-
+        //кнопка вычисления
         private void buttonRes_Click(object sender, EventArgs e)
         {
             try
@@ -98,7 +99,7 @@ namespace UP
             }
         }
 
-
+        //отрисовка
         private void DrawVisualization(double x0, double y0, double R, double C, string direction, List<MonteCarloPoint> points)
         {
             Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
@@ -158,7 +159,7 @@ namespace UP
         }
 
 
-
+        //инициализация главного окна
         private void MainForm_Load(object sender, EventArgs e)
         {
             x0Box.Text = "X0";
@@ -190,6 +191,8 @@ namespace UP
 
             DatabaseHelper.InitializeDatabase();
         }
+
+        //функция back-текста в textedit
         private void x0Box_Enter(object sender, EventArgs e)
         {
             if (x0Box.Text == "X0")
@@ -199,6 +202,7 @@ namespace UP
             }
         }
 
+        //функция back-текста в textedit
         private void x0Box_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(x0Box.Text))
@@ -208,6 +212,7 @@ namespace UP
             }
         }
 
+        //функция back-текста в textedit
         private void y0Box_Enter(object sender, EventArgs e)
         {
             if (y0Box.Text == "Y0")
@@ -217,6 +222,7 @@ namespace UP
             }
         }
 
+        //функция back-текста в textedit
         private void y0Box_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(y0Box.Text))
@@ -226,6 +232,7 @@ namespace UP
             }
         }
 
+        //функция back-текста в textedit
         private void rBox_Enter(object sender, EventArgs e)
         {
             if (rBox.Text == "R")
@@ -235,6 +242,7 @@ namespace UP
             }
         }
 
+        //функция back-текста в textedit
         private void rBox_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(rBox.Text))
@@ -244,6 +252,7 @@ namespace UP
             }
         }
 
+        //функция back-текста в textedit
         private void cBox_Enter(object sender, EventArgs e)
         {
             if (cBox.Text == "C")
@@ -253,6 +262,7 @@ namespace UP
             }
         }
 
+        //функция back-текста в textedit
         private void cBox_Leave(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(cBox.Text))
@@ -262,18 +272,23 @@ namespace UP
             }
         }
 
+        //открытие формы истории результатов
         private void toolStripLabel1_Click(object sender, EventArgs e)
         {
             HistoryForm form = new HistoryForm();
             form.ShowDialog();
         }
 
+
+        //открытие формы о программе
         private void toolStripLabel2_Click(object sender, EventArgs e)
         {
             AboutForm form = new AboutForm();
             form.ShowDialog();
         }
 
+
+        //функция очистки главного окна
         private void buttonClear_Click(object sender, EventArgs e)
         {
             x0Box.Clear();
@@ -305,6 +320,8 @@ namespace UP
             monteCarloResultLabel.Clear();
         }
 
+
+        //функция загрузки записи из бд
         private void loadButton_Click(object sender, EventArgs e)
         {
             using (var inputForm = new Form())
@@ -385,17 +402,20 @@ namespace UP
             }
         }
 
+        //открытие анализ формы
         private void toolAnalisys_Click(object sender, EventArgs e)
         {
             AnalysisForm form = new AnalysisForm();
             form.ShowDialog();
         }
 
+        //открытие справки
         private void toolHelp_Click(object sender, EventArgs e)
         {
             Help.ShowHelp(this, "spravka.chm", HelpNavigator.KeywordIndex, "main");
         }
 
+        //бинд на F1
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (keyData == Keys.F1)
