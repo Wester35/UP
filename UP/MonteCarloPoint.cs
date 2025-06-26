@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace UP
 {
+    // Класс представляет одну точку, использующуюся в методе Монте-Карло.
     public class MonteCarloPoint
     {
         public double X { get; set; }
